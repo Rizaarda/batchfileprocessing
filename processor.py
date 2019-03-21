@@ -26,7 +26,8 @@ while True:
 	tomorrow_date = format_date(datetime.datetime.now() + datetime.timedelta(days=1))
 	
 	while (not os.path.isdir(camera_path + tomorrow_date)):
-		time.sleep(60)
+		time.sleep(3600)
+		print("Waiting the system to finish putting videos")
 
 	if os.path.isdir(camera_path + tomorrow_date):
 		
@@ -65,4 +66,5 @@ while True:
 					rmtree(output_path + folder_name, ignore_errors=True)
 
 	while format_date(datetime.datetime.now()) is not tomorrow_date:
-		time.sleep(60)
+		time.sleep(3600)
+		print("Waiting the next day")
