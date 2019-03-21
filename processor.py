@@ -27,18 +27,18 @@ while True:
 	
 	if os.path.isdir(camera_path + tomorrow_date):
 		
-		#src_files = os.listdir(camera_path + today_date)
+		src_files = os.listdir(camera_path + today_date)
 		
-		#for file_name in src_files:
-		#	full_file_name = os.path.join(camera_path + today_date, file_name)
-		#	if (os.path.isfile(full_file_name)):
-		#		copyfile(full_file_name, input_path + file_name)
-		#		conversion_file_name = file_name.replace("dav", "mp4")
-		#		command = "ffmpeg -loglevel quiet -i " + input_path + file_name + " -vcodec copy -scodec mov_text " + input_path + conversion_file_name
-		#		proc = subprocess.Popen(command)
-		#		while proc.poll() is None:
-		#			time.sleep(1)
-		#		os.remove(input_path + file_name)
+		for file_name in src_files:
+			full_file_name = os.path.join(camera_path + today_date, file_name)
+			if (os.path.isfile(full_file_name)):
+				copyfile(full_file_name, input_path + file_name)
+				conversion_file_name = file_name.replace("dav", "mp4")
+				command = "ffmpeg -loglevel quiet -i " + input_path + file_name + " -vcodec copy -scodec mov_text " + input_path + conversion_file_name
+				proc = subprocess.Popen(command)
+				while proc.poll() is None:
+					time.sleep(1)
+				os.remove(input_path + file_name)
 		
 		command = "python RunStDocker_060419.py HLSOFF"
 		proc = subprocess.Popen(command)
@@ -53,11 +53,11 @@ while True:
 			output_files = os.listdir(output_path + folder_name)
 			for output_file in output_files:
 				if output_file.endswith(".mp4"):
-					copyfile(output_path + folder_name + output_file, output_path + today_date + output_file)
+  
+                    full_file_name = os.path.join(output_path + folder_name, output_file)
+                    cp_file = os.path.join(output_path + today_date, output_file)
+					copyfile(full_file_name, cp_file)
 					rmtree(output_path + folder_name, ignore_errors=True)
 
 	while format_date(datetime.datetime.now()) is not tomorrow_date:
-		time.sleep(1)
-		print("sleep :)")
-
-
+		time.sleep(60)
