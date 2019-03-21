@@ -25,6 +25,9 @@ while True:
 	today_date = format_date(datetime.datetime.now())
 	tomorrow_date = format_date(datetime.datetime.now() + datetime.timedelta(days=1))
 	
+	while (not os.path.isdir(camera_path + tomorrow_date)):
+		time.sleep(60)
+
 	if os.path.isdir(camera_path + tomorrow_date):
 		
 		src_files = os.listdir(camera_path + today_date)
@@ -34,14 +37,16 @@ while True:
 			if (os.path.isfile(full_file_name)):
 				copyfile(full_file_name, input_path + file_name)
 				conversion_file_name = file_name.replace("dav", "mp4")
-				command = "ffmpeg -loglevel quiet -i " + input_path + file_name + " -vcodec copy -scodec mov_text " + input_path + conversion_file_name
-				proc = subprocess.Popen(command)
+				command = "ffmpeg -i " + input_path + file_name + " -vcodec copy -scodec mov_text " + input_path + conversion_file_name
+				fh = open("NUL", "w")
+				proc = subprocess.Popen(command, stdout = fh, stderr = fh)
 				while proc.poll() is None:
 					time.sleep(1)
 				os.remove(input_path + file_name)
 		
 		command = "python RunStDocker_060419.py HLSOFF"
-		proc = subprocess.Popen(command)
+		fh = open("NUL", "w")
+		proc = subprocess.Popen(command, stdout = fh, stderr = fh)
 
 		while proc.poll() is None:
 			time.sleep(1)
