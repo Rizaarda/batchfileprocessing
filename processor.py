@@ -27,6 +27,10 @@ while True:
 					time.sleep(1)
 				os.remove(input_path + file_name)
 
+	while format_date(datetime.datetime.now()) is not tomorrow_date:
+		time.sleep(1000)
+		print("sleep :)")
+
 
 def format_date(date):
 	return str(date.year) + '-' + str(date.month) + '-' + str(date.day)
