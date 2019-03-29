@@ -4,6 +4,8 @@ import os
 import datetime
 from shutil import copyfile, rmtree
 
+#2019-03-25
+
 camera_path = "C:\\FtpCamera\\Record\\test\\"
 input_path = "C:\\ShareVM\\input\\"
 output_path = "C:\\ShareVM\\output\\"
@@ -19,6 +21,9 @@ def format_date(date):
 	else:
 		result += str(date.day)
 	return result
+
+today_date = format_date(datetime.datetime.now())
+
 
 while True:
 
